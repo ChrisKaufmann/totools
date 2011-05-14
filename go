@@ -5,16 +5,21 @@ userhost=$1
 keyfile=~/.ssh/id_rsa.pub
 authkeyfile='~/.ssh/authorized_keys'
 
+#if no userhost is specified, print usage and exit
+if [ ! $userhost ]
+  then
+    echo "usage: $0 [user@]hostname <defaults to root@>"
+	exit
+fi
 
 #if no ssh public key exists, create one in the default spot
 if [ ! -e $keyfile ]
   then
-    echo "Creating SSH key in $keyfile"
-    ssh-keygen -t rsa  -f $keyfile -q -N ''
+    echo "Error, no public key file,please run ssh-keygen"
+	exit
 fi
 #now get the key itself into a variable
 mypubkey=`cat $keyfile`
-
 
 #if no username is passed (like someuser@somehost), use root by default
 if [[ ! "$userhost" =~ '@' ]]
@@ -39,10 +44,12 @@ if [[  "$userhost" == 'root@'$1 ]]
     userhost=root@$1
     for f in /usr/bin/ami /usr/bin/didi /usr/bin/killthe /usr/bin/redo /usr/bin/ducks
     do
-      scp -q $f $userhost:$f
+	  if [ -e $f ]
+	    then
+          scp -q $f $userhost:$f
+	  fi
     done
 fi
-
 
 #and finally, ssh to the host.
 ssh $userhost $2
