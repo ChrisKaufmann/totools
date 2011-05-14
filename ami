@@ -1,0 +1,6 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+my $ami=shift || "usage: $0 <thing I'm supposedly doing>";
+my @a=`ps ux | grep -v grep | grep -v ami | grep -i $ami`;
+print @a

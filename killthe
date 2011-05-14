@@ -1,0 +1,7 @@
+#!/usr/bin/env perl
+use warnings;
+use strict;
+my $todo=shift || die "usage: $0 <program to kill>";
+my @a=`ps aux | grep -v grep | grep -v killthe | grep -i $todo`;
+@a=map{ (split())[1]}@a;
+map{$a=$_;print "Killing $a\n";`kill -9 $a`;}@a;

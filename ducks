@@ -1,0 +1,2 @@
+#blatently stolen from the original "Linux Server Hacks" book
+du -cks * | sort -rn | head -11

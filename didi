@@ -1,0 +1,6 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+my $didi=shift || die "usage: $0 <thing>";
+my @a=`grep -i $didi ~/.bash_history`;
+print @a;
