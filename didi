@@ -1,6 +1,11 @@
-#!/usr/bin/perl
-use warnings;
-use strict;
-my $didi=shift || die "usage: $0 <thing>";
-my @a=`grep -i $didi ~/.bash_history`;
-print @a;
+#!/usr/bin/env bash
+
+search=$1
+#if no search term is specified, print usage and exit
+if [ ! $search ]
+	then
+		echo "usage: $0 <cmd to search history for>"
+		exit
+fi
+grep -i $search ~/.bash_history
+
