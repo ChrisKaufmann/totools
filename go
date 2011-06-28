@@ -8,7 +8,7 @@ authkeyfile='~/.ssh/authorized_keys'
 #if no userhost is specified, print usage and exit
 if [ ! $userhost ]
   then
-    echo "usage: $0 [user@]hostname <defaults to root@>"
+    echo "usage: $0 [user@]hostname[:port] <defaults to root@>"
 	exit
 fi
 
@@ -27,11 +27,20 @@ if [[ ! "$userhost" =~ '@' ]]
     userhost=root@$1
 fi
 
+#see if there's a port on the end, if so create $p with the port
+if [[ $userhost =~ (.*@.*):(.*) ]]
+  then
+    userhost="${BASH_REMATCH[1]}"
+  	port=" -p ${BASH_REMATCH[2]} "
+  else
+    port=" "
+fi
+
 #this keeps it to one time needed to enter the password,
 #it'll create the .ssh directory with right perms, touch the key file,
 #create a backup without our key (no dupes),
 #and copy it back
-ssh $userhost "mkdir -p .ssh; 
+ssh $port $userhost "mkdir -p .ssh; 
   chmod 700 .ssh;
   touch $authkeyfile; 
   cp $authkeyfile ${authkeyfile}.bak;
@@ -46,10 +55,10 @@ if [[  "$userhost" == 'root@'$1 ]]
     do
 	  if [ -e $f ]
 	    then
-          scp -q $f $userhost:$f
+          scp $port -q $f $userhost:$f
 	  fi
     done
 fi
 
 #and finally, ssh to the host.
-ssh $userhost $2
+ssh $port $userhost $2
