@@ -2,10 +2,19 @@ A few useful tools and shortcuts I use on machines
 
 go:
 will add your public key to a remote user's authorized keys file and ssh to the host
-usage: go [user@]<hostname> [optional command to run remotely
+usage: go [user@]<hostname>[:port] [optional command to run remotely]
 ex:
 gotools chriskaufmann$ go southpark "uptime"
  21:45:45 up 245 days, 13:48,  2 users,  load average: 0.00, 0.00, 0.00
+gotools chriskaufmann$ go bob:8022 "uptime"
+ 15:53:52 up 31 days, 18:50,  0 users,  load average: 0.01, 0.01, 0.00
+
+gox:
+ identical to go, except for going with X support
+usage: gox [user@]<hostname>[:port] [optional command to run remotely]
+ex:
+gotools chriskaufmann$ gox futurama VirtualBox
+(VirtualBox window pops up)
 
 ami:
 as in "am I doing something?"
@@ -40,7 +49,7 @@ chriskaufmann$ ami tail
 chriskaufmann 15803   0.0  0.0  2434844    336 s015  S+    9:59PM   0:00.00 tail -f /var/log/mail.log
 gotools chriskaufmann$ killthe tail
 Killing 15803
-ami tail
+gotools chriskaufmann$ ami tail
 gotools chriskaufmann$
 
 redo (Not useful yet):
