@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 todo=$1
 
-if [ $todo ] 
+if [[ ${todo} ]]
 then
 	nohup $todo &
 else
