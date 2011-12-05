@@ -52,6 +52,20 @@ Killing 15803
 gotools chriskaufmann$ ami tail
 gotools chriskaufmann$
 
+killport:
+kills the process listening on a port
+usage: killport <port number>
+ex:
+chriskaufmann$ lsof -i:24800
+COMMAND  PID          USER   FD   TYPE     DEVICE SIZE/OFF NODE NAME
+synergys 296 chriskaufmann    5u  IPv4 0x05d99ee8      0t0  TCP *:24800 (LISTEN)
+synergys 296 chriskaufmann   10u  IPv4 0x09190ad8      0t0  TCP monitor.private.connamara.com:24800->192.168.200.253:54604 (ESTABLISHED)
+chriskaufmann$ killport 24800
+killing 24800
+chriskaufmann$ lsof -i:24800
+chriskaufmann$
+
+
 background:
 Run something in the background (for remote usage mostly)
 usage: background 'command to run'
