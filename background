@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 todo=$1
 
-nohup $todo &
+if [ $todo ] 
+then
+	nohup $todo &
+else
+	echo "usage: $0 'command to run in background'"
+fi
 exit
