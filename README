@@ -52,6 +52,17 @@ Killing 15803
 gotools chriskaufmann$ ami tail
 gotools chriskaufmann$
 
+background:
+Run something in the background (for remote usage mostly)
+usage: background 'command to run'
+ex:
+chriskaufmann$ background 'rails server'
+nohup: appending output to `nohup.out'
+chriskaufmann$
+chriskaufmann$ ami rails
+chriskaufmann 32446  1.1  6.9 724488 276516 ?       Sl   11:32   1:22 rails server
+chriskaufmann$
+
 redo (Not useful yet):
 Re-does the last command matching input
 usage: redo <thing to redo>
