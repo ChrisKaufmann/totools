@@ -3,7 +3,7 @@ todo=$1
 
 if [[ ${todo} ]]
 then
-	nohup $todo &
+	nohup "$todo" &> /dev/null &
 else
 	echo "usage: $0 'command to run in background'"
 fi
