@@ -66,3 +66,6 @@ chriskaufmann$
 redo (Not useful yet):
 Re-does the last command matching input
 usage: redo <thing to redo>
+
+Download:
+ bash < <(curl -s https://raw.github.com/ChrisKaufmann/gotools/master/get-gotools.sh)
