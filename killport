@@ -4,6 +4,11 @@ use strict;
 my @lines=();
 $lines[0]=shift;
 if(!-t STDIN){@lines=<>;}
+if(!$lines[0])
+{
+	print "usage: $0 <portnum>\n";
+	exit();
+}
 
 foreach my $port(@lines)
 {
