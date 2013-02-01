@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 #this will copy our public key to a remote host and ssh to it.
+if [[ $0 =~ "tox" ]]
+  then
+	x=' -X '
+fi
 
 userhost=$1
 keyfile=~/.ssh/id_rsa.pub
@@ -61,4 +65,4 @@ if [[  "$userhost" == 'root@'$1 ]]
 fi
 
 #and finally, ssh to the host.
-ssh $port $userhost $2
+ssh $x $port $userhost $2
