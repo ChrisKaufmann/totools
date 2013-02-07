@@ -1,33 +1,33 @@
 A few useful tools and shortcuts I use on machines
 
-go:
+to:
 will add your public key to a remote user's authorized keys file and ssh to the host
-usage: go [user@]<hostname>[:port] [optional command to run remotely]
+usage: to [user@]<hostname>[:port] [optional command to run remotely]
 ex:
-gotools chriskaufmann$ go southpark "uptime"
+totools chriskaufmann$ to southpark "uptime"
  21:45:45 up 245 days, 13:48,  2 users,  load average: 0.00, 0.00, 0.00
-gotools chriskaufmann$ go bob:8022 "uptime"
+totools chriskaufmann$ to bob:8022 "uptime"
  15:53:52 up 31 days, 18:50,  0 users,  load average: 0.01, 0.01, 0.00
 
-gox:
- identical to go, except for going with X support
-usage: gox [user@]<hostname>[:port] [optional command to run remotely]
+tox:
+ identical to to, except for going with X support
+usage: tox [user@]<hostname>[:port] [optional command to run remotely]
 ex:
-gotools chriskaufmann$ gox futurama VirtualBox
+totools chriskaufmann$ tox futurama VirtualBox
 (VirtualBox window pops up)
 
 ami:
 as in "am I doing something?"
 usage: ami <some command>
 ex:
-gotools chriskaufmann$ ami notify
+totools chriskaufmann$ ami notify
 root        12   0.0  0.0  2444624    416   ??  Ss   Tue04PM   0:05.92 /usr/sbin/notifyd
 
 didi:
 as in "did I do something?"
 usage: didi <some command>
 ex:
-gotools chriskaufmann$ didi ducks
+totools chriskaufmann$ didi ducks
 git add ducks
 vi ducks
 vi ducks
@@ -37,7 +37,7 @@ ducks:
 Alias for "du -cks * | sort -rn | head -11" as found in "Linux Server Hacks"
 usage: ducks [optional dir to duck]
 ex:
-gotools chriskaufmann$ ./ducks /opt
+totools chriskaufmann$ ./ducks /opt
 70404   total
 70404   /opt/local
 
@@ -47,10 +47,10 @@ usage: killthe <processes to kill>
 ex:
 chriskaufmann$ ami tail
 chriskaufmann 15803   0.0  0.0  2434844    336 s015  S+    9:59PM   0:00.00 tail -f /var/log/mail.log
-gotools chriskaufmann$ killthe tail
+totools chriskaufmann$ killthe tail
 Killing 15803
-gotools chriskaufmann$ ami tail
-gotools chriskaufmann$
+totools chriskaufmann$ ami tail
+totools chriskaufmann$
 
 killport:
 kills the process listening on a port
