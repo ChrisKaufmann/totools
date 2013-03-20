@@ -13,6 +13,7 @@ if(!$lines[0])
 foreach my $port(@lines)
 {
 	my $rets=`/usr/sbin/lsof -i:$port | grep LISTEN`;chomp($rets);
+	next unless $rets;
 	my $pid=(split(/\s+/,$rets))[1];
 	print "killing $pid\n";
 	`kill $pid`;
