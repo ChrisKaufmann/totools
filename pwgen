@@ -2,7 +2,7 @@
 #via: http://thdonline.wordpress.com/2009/03/14/shell-script-to-generate-random-password/
 #with a slight modification for my preferences
 
-CHAR_ARRAY=( {a..z} {A..Z} {0..9}  \! \@ \# \$ \% \^ \& \* \( \) \[ \] \{ \} \: \; \, \. \< \> \?)
+CHAR_ARRAY=( {a..z} {A..Z} {0..9}  \! \@ \# \% \^ \& \* \( \) \[ \] \{ \} \: \; \, \. \< \>) 
 
 while getopts "n" opt; do
 	case $opt in
