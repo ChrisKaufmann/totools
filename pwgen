@@ -25,8 +25,9 @@ fi
 
 
 MODNUM=${#CHAR_ARRAY[*]} 
-for index in `shuf --input-range=0-$(( ${#CHAR_ARRAY[*]} - 1 )) | head -${MAXSIZE}`
+for ((i=0; i < $MAXSIZE; i++ ))
 do
-	echo -n "${CHAR_ARRAY[$index]}"
+	NUM=$(( RANDOM % $MODNUM ))
+	echo -n "${CHAR_ARRAY[$NUM]}"
 done
 echo ""
