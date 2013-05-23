@@ -77,6 +77,21 @@ chriskaufmann$ ami rails
 chriskaufmann 32446  1.1  6.9 724488 276516 ?       Sl   11:32   1:22 rails server
 chriskaufmann$
 
+pwgen:
+Generates a decent password
+usage: pwgen [-n|-d|-h|-c] [len]
+ex:monitor:~ chriskaufmann$ pwgen 32
+lCrTh6S[6VK.TWBh&9hv(t45N)zsc)H;
+monitor:~ chriskaufmann$ pwgen -n 19
+3CxEPysoosQNHPY0r1w
+monitor:~ chriskaufmann$ pwgen -c 15
+HDevroEjZiwtkpj
+monitor:~ chriskaufmann$ pwgen -h 16
+b9688c94b3a64c1c
+monitor:~ chriskaufmann$ pwgen -d 15
+168009022286126
+monitor:~ chriskaufmann$
+
 redo (Not useful yet):
 Re-does the last command matching input
 usage: redo <thing to redo>
