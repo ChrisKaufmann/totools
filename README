@@ -90,6 +90,8 @@ monitor:~ chriskaufmann$ pwgen -h 16
 b9688c94b3a64c1c
 monitor:~ chriskaufmann$ pwgen -d 15
 168009022286126
+monitor:totools chriskaufmann$ pwgen
+4oBB1]N1ciB94svA
 monitor:~ chriskaufmann$
 
 redo (Not useful yet):
