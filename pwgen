@@ -4,10 +4,27 @@
 
 CHAR_ARRAY=( {a..z} {A..Z} {0..9}  \! \@ \# \% \^ \& \* \( \) \[ \] \{ \} \: \; \, \. \< \>) 
 
-while getopts "n" opt; do
+while getopts "ndhc?" opt; do
 	case $opt in
 		n)
 			CHAR_ARRAY=( {a..z} {A..Z} {0..9} )
+			;;
+		d)
+			CHAR_ARRAY=( {0..9} )
+			;;
+		h)
+			CHAR_ARRAY=( {0..9} {a..f} )
+			;;
+		c)
+			CHAR_ARRAY=( {a..z} {A..Z} )
+			;;
+		?)
+			echo "Usage: $0 [options] [length]
+	-n 'nice' output, Alphanumberic only
+	-d digits 0-9
+	-h hex 0-9 and a-f
+	-c characters only, A-Z and a-z"
+			exit
 			;;
 	esac
 done
