@@ -23,6 +23,15 @@ ex:
 totools chriskaufmann$ ami notify
 root        12   0.0  0.0  2444624    416   ??  Ss   Tue04PM   0:05.92 /usr/sbin/notifyd
 
+amp:
+as in "Am I doing something on a Port"
+usage: amp <port or command name>
+ex:
+chris$ sudo ./amp mysql
+*:3306
+chris$ sudo ./amp 3306
+mysql    27614  1.6  1.0 705656 22256 ?        Sl   May26  97:40 /usr/libexec/mysqld --basedir=/usr --datadir=/var/lib/mysql --user=mysql --log-error=/var/log/mysqld.log --pid-file=/var/run/mysqld/mysqld.pid --socket=/var/lib/mysql/mysql.sock
+
 didi:
 as in "did I do something?"
 usage: didi <some command>

@@ -1,0 +1,15 @@
+#!/bin/bash 
+TOFIND=$1
+
+if [[ "$TOFIND" =~ ^[0-9]+$ ]]; then
+	PID=`lsof -i:$TOFIND | grep LISTEN | awk '{print $2}'`
+	if [ -z $PID ]; then
+		exit
+	fi
+	ami $PID | grep -v amp
+else
+	for PID in $(ami $TOFIND | grep -v amp | awk '{print $2}')
+	do
+		lsof -p $PID -P | grep LISTEN | awk '{print $9}'
+	done
+fi
