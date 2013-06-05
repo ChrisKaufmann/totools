@@ -1,0 +1,50 @@
+#!/bin/bash 
+#with a slight modification for my preferences
+
+SLEEP=10
+ITER=-1
+usage () 
+{
+	echo "Usage: $0 [options] \"cmd to run\"
+	-n (val)  number of iterations
+	-t (val)  seconds to sleep between"
+}
+while getopts "t:n:h?" opt; do
+	case $opt in
+		n)
+			ITER="$OPTARG"
+			;;
+		t)
+			SLEEP="$OPTARG"
+			;;
+		h)
+			usage
+			exit
+			;;
+		?)
+			usage
+			exit
+			;;
+	esac
+done
+shift $(($OPTIND - 1))
+
+CMD=$1
+
+#check for no command to be run passed
+if [[ -z "$CMD" ]]
+then
+	usage
+	exit
+fi
+
+#loop, escaping if it reaches max iter
+for (( i=1; ; i++ ))
+do
+	$CMD
+	if ( (($ITER > 0)) && (($i >= $ITER))  )
+	then
+		break
+	fi
+	sleep $SLEEP
+done

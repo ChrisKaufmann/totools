@@ -103,6 +103,27 @@ monitor:totools chriskaufmann$ pwgen
 4oBB1]N1ciB94svA
 monitor:~ chriskaufmann$
 
+loop:
+constantly re-runs a command
+usage: loop [-n <num to run>|-t <time to sleep] 'command to run'
+ex:
+monitor:~chriskaufmann$ loop date
+Wed Jun  5 15:56:44 CDT 2013
+Wed Jun  5 15:56:54 CDT 2013
+^C
+monitor:~ chriskaufmann$ loop -t 1 date
+Wed Jun  5 15:57:02 CDT 2013
+Wed Jun  5 15:57:03 CDT 2013
+^C
+monitor:~ chriskaufmann$ loop -n 3 date
+Wed Jun  5 15:57:08 CDT 2013
+Wed Jun  5 15:57:18 CDT 2013
+Wed Jun  5 15:57:28 CDT 2013
+monitor:~ chriskaufmann$ loop -t 1 -n 2 date
+Wed Jun  5 15:57:40 CDT 2013
+Wed Jun  5 15:57:41 CDT 2013
+monitor:~ chriskaufmann$
+
 redo (Not useful yet):
 Re-does the last command matching input
 usage: redo <thing to redo>
