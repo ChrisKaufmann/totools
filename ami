@@ -7,4 +7,4 @@ if [ ! $search ]
 		echo "usage: $0 <cmd to search process list for>"
 		exit
 fi
-ps ux | grep -v grep | grep -v ami | grep -i $search
+ps aux | grep -v grep | grep -v ami | grep -i $search
