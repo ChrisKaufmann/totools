@@ -8,8 +8,8 @@ if [[ "$TOFIND" =~ ^[0-9]+$ ]]; then
 	fi
 	ami $PID | grep -v amp
 else
-	for PID in $(ami $TOFIND | grep -v amp | awk '{print $2}')
+	for PID in $(ps aux | grep $TOFIND | grep -v grep | grep -v amp | awk '{print $2}')
 	do
-		lsof -p $PID -P | grep LISTEN | awk '{print $9}'
+		lsof -p $PID -P | grep LISTEN | awk '{print $9}'  | sort | uniq
 	done
 fi
