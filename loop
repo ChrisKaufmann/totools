@@ -8,9 +8,10 @@ usage ()
 	echo "Usage: $0 [options] \"cmd to run\"
 	-n (val)  number of iterations
 	-t (val)  seconds to sleep between
-	-f (filename) loop over each thing in the file - use \$1 as the replacement"
+	-f (filename) loop over each thing in the file - use \$1 as the replacement
+	-g (filename2) second file to loop over, use \$2 as the replacement"
 }
-while getopts "t:n:f:h?" opt; do
+while getopts "t:n:f:g:h?" opt; do
 	case $opt in
 		n)
 			ITER="$OPTARG"
@@ -20,6 +21,9 @@ while getopts "t:n:f:h?" opt; do
 			;;
 		f)
 			FILE="$OPTARG"
+			;;
+		g)
+			FILEF="$OPTARG"
 			;;
 		h)
 			usage
@@ -41,7 +45,17 @@ then
 	do
 		cmd_tmp=$CMD
 		cmd_tmp=${cmd_tmp/\$1/$line}
-		$cmd_tmp
+		if [[ $FILEF ]]
+		then
+			for linef in $(cat $FILEF)
+			do
+				cmd_tmp_two=$cmd_tmp
+				cmd_tmp_two=${cmd_tmp_two/\$2/$linef}
+				echo $cmd_tmp_two
+			done
+		else
+			echo $cmd_tmp
+		fi
 	done
 	exit
 fi
