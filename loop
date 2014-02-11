@@ -7,15 +7,19 @@ usage ()
 {
 	echo "Usage: $0 [options] \"cmd to run\"
 	-n (val)  number of iterations
-	-t (val)  seconds to sleep between"
+	-t (val)  seconds to sleep between
+	-f (filename) loop over each thing in the file - use \$1 as the replacement"
 }
-while getopts "t:n:h?" opt; do
+while getopts "t:n:f:h?" opt; do
 	case $opt in
 		n)
 			ITER="$OPTARG"
 			;;
 		t)
 			SLEEP="$OPTARG"
+			;;
+		f)
+			FILE="$OPTARG"
 			;;
 		h)
 			usage
@@ -30,6 +34,17 @@ done
 shift $(($OPTIND - 1))
 
 CMD=$1
+
+if [[ $FILE ]]
+then
+	for line in $(cat $FILE)
+	do
+		cmd_tmp=$CMD
+		cmd_tmp=${cmd_tmp/\$1/$line}
+		$cmd_tmp
+	done
+	exit
+fi
 
 #check for no command to be run passed
 if [[ -z "$CMD" ]]
