@@ -1,0 +1,33 @@
+#!/bin/bash
+myuserhost=$1
+user=$2
+authfile=$3
+
+if [ ! $authfile ]
+	then
+		echo "usage: $0 <youruser@host> <newuser> <authfile>"
+	exit
+fi
+if [ ! -e $authfile ]
+	then
+		echo "keyfile $authfile not found"
+	exit
+fi
+
+mypubkey=`cat $authfile`;
+authkeyfile="~$user/.ssh/authorized_keys"
+
+ssh -t $myuserhost "sudo useradd $user;
+	sudo mkdir -p ~$user/.ssh; 
+	sudo chown -R root ~$user/.ssh;
+	sudo chmod 700 ~$user/.ssh;
+	sudo  touch $authkeyfile; 
+	sudo bash -c 'cp $authkeyfile /tmp/';
+	sudo bash -c 'chmod 777 /tmp/authorized_keys';
+	grep -v '$mypubkey' /tmp/authorized_keys > /tmp/authkeyfile.new; 
+	sudo echo '$mypubkey' >> /tmp/authkeyfile.new;
+	sudo bash -c 'mv /tmp/authkeyfile.new $authkeyfile';
+	sudo bash -c 'chmod 644 $authkeyfile';
+	sudo bash -c 'chown -R $user:$user ~$user/.ssh';
+	sudo echo '$USER ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+	"

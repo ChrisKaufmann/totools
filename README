@@ -128,5 +128,12 @@ redo (Not useful yet):
 Re-does the last command matching input
 usage: redo <thing to redo>
 
+radduser:
+remotely add user, user's ssh key, and adds to sudoers file
+usage: radduser <my user@host> <new username> <new user's pubkey>
+ex:
+monitor:~/totools$ radduser myuser@host newguy ~/newguykey.pub
+monitor:~/totools$
+
 Download:
  bash < <(curl -s https://raw.github.com/ChrisKaufmann/totools/master/get-totools.sh)
