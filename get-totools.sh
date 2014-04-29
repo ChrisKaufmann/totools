@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-location='https://raw.githubusercontent.com/ChrisKaufmann/totools/master/'
+location='https://raw.githubusercontent.com/ChrisKaufmann/totools/master'
 for thing in ami amp background didi ducks to tox killthe killport pwgen loop radduser spork
 do
 	curl $location/$thing -o /usr/local/bin/$thing
