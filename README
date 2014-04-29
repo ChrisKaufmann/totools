@@ -136,4 +136,4 @@ monitor:~/totools$ radduser myuser@host newguy ~/newguykey.pub
 monitor:~/totools$
 
 Download:
- bash < <(curl -s https://raw.github.com/ChrisKaufmann/totools/master/get-totools.sh)
+ bash < <(curl -s https://raw.githubusercontent.com/ChrisKaufmann/totools/master/get-totools.sh)
