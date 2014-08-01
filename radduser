@@ -29,5 +29,5 @@ ssh -t $myuserhost "sudo useradd $user;
 	sudo bash -c 'mv /tmp/authkeyfile.new $authkeyfile';
 	sudo bash -c 'chmod 644 $authkeyfile';
 	sudo bash -c 'chown -R $user:$user ~$user/.ssh';
-	sudo echo '$USER ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+	sudo echo '$user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 	"
