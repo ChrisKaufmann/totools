@@ -137,3 +137,5 @@ monitor:~/totools$
 
 Download:
  bash < <(curl -s https://raw.githubusercontent.com/ChrisKaufmann/totools/master/get-totools.sh)
+
+Or, btsync read-only secret: BJIV7XLKZMTPNRVA6QBHNK3WRBXZDH5YA

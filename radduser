@@ -1,4 +1,33 @@
 #!/bin/bash
+
+DOPASS=""
+DOSUDO=""
+
+usage()
+{
+	echo "usage: $0 [-s] [-p] <youruser@host> <newuser> <authfile>"
+}
+
+while getopts "sph?" opt; do
+	case $opt in
+		s)
+			DOPASS=1
+			;;
+		p)
+			DOSUDO=1
+			;;
+		h)
+			usage
+			exit
+			;;
+		?)
+			usage
+			exit
+			;;
+	esac
+done
+shift $(($OPTIND -1))
+
 myuserhost=$1
 user=$2
 authfile=$3
@@ -17,7 +46,18 @@ fi
 mypubkey=`cat $authfile`;
 authkeyfile="~$user/.ssh/authorized_keys"
 
-ssh -t $myuserhost "sudo useradd $user;
+if [[ $DOSUDO =~ 1 ]]
+	then 
+		DOSUDO="sudo echo '$user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
+fi
+if [[ $DOPASS =~ 1 ]]
+	then 
+		NEWPASS=`pwgen -n 32`
+		echo "Setting password to $NEWPASS"
+		DOPASS="echo '$NEWPASS' | passwd $user --stdin"
+fi
+
+mycmd="sudo useradd $user;
 	sudo mkdir -p ~$user/.ssh; 
 	sudo chown -R root ~$user/.ssh;
 	sudo chmod 700 ~$user/.ssh;
@@ -29,5 +69,6 @@ ssh -t $myuserhost "sudo useradd $user;
 	sudo bash -c 'mv /tmp/authkeyfile.new $authkeyfile';
 	sudo bash -c 'chmod 644 $authkeyfile';
 	sudo bash -c 'chown -R $user:$user ~$user/.ssh';
-	sudo echo '$user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+	$DOSUDO;$DOPASS
 	"
+ssh -t $myuserhost "$mycmd"

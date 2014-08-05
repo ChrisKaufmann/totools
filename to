@@ -55,7 +55,7 @@ ssh $port $userhost "mkdir -p .ssh;
 if [[  "$userhost" == 'root@'$1 ]]
   then
     userhost=root@$1
-    for f in /usr/bin/ami /usr/bin/didi /usr/bin/killthe /usr/bin/redo /usr/bin/ducks
+    for f in /usr/bin/ami /usr/bin/didi /usr/bin/killthe /usr/bin/redo /usr/bin/ducks /usr/bin/to /usr/bin/tox
     do
 	  if [ -e $f ]
 	    then

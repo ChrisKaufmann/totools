@@ -51,10 +51,10 @@ then
 			do
 				cmd_tmp_two=$cmd_tmp
 				cmd_tmp_two=${cmd_tmp_two/\$2/$linef}
-				echo $cmd_tmp_two
+				sh -c "$cmd_tmp_two"
 			done
 		else
-			echo $cmd_tmp
+			sh -c "$cmd_tmp"
 		fi
 	done
 	exit
