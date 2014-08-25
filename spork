@@ -1,4 +1,5 @@
 #!/usr/bin/env perl
+use threadeach;
 use warnings;
 use strict;
 use Getopt::Long qw(:config bundling);
@@ -49,9 +50,23 @@ my $longest=(sort(map {length($_)}@lines))[-1];
 #decide how to run, threaded or not, and how many
 switch($threaded)
 {
-	case -1 			{eval"use Threadeach;Threadeach::threadall(\&runcmd_not_int,@lines);" or run_looped(1)}	#infinite threads
-	case 1				{eval"use Threadeach;Threadeach::threadeach(\&runcmd_not_int,@lines);" or run_looped(1)}	#default threads
-	case {$threaded>0}	{eval"use Threadeach;Threadeach::threadsome(\&runcmd_not_int,$threaded,@lines);" or run_looped(1)} #specified # of threads
+	case -1 			
+	{
+		threadall my $l(@lines){
+			runcmd_not_int($l);
+		}
+	}
+	case 1				
+	{
+		threadeach my $l(@lines)
+		{
+			runcmd_not_int($l);
+		}	
+	}	
+	case {$threaded>0}	
+	{
+		threadeach::threadsome(\&runcmd_not_int,$threaded,@lines);
+	}
 	else	{run_looped()}
 }
 
