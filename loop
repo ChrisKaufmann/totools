@@ -54,7 +54,7 @@ then
 				sh -c "$cmd_tmp_two"
 			done
 		else
-			sh -c "$cmd_tmp"
+			$cmd_tmp
 		fi
 	done
 	exit

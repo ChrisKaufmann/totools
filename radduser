@@ -5,15 +5,17 @@ DOSUDO=""
 
 usage()
 {
-	echo "usage: $0 [-s] [-p] <youruser@host> <newuser> <authfile>"
+	echo "usage: $0 [-s] [-p] <youruser@host> <newuser> <authfile>
+	-s adds user to sudoers
+	-p generates a password"
 }
 
 while getopts "sph?" opt; do
 	case $opt in
-		s)
+		p)
 			DOPASS=1
 			;;
-		p)
+		s)
 			DOSUDO=1
 			;;
 		h)
@@ -34,7 +36,7 @@ authfile=$3
 
 if [ ! $authfile ]
 	then
-		echo "usage: $0 <youruser@host> <newuser> <authfile>"
+		usage
 	exit
 fi
 if [ ! -e $authfile ]
@@ -46,16 +48,6 @@ fi
 mypubkey=`cat $authfile`;
 authkeyfile="~$user/.ssh/authorized_keys"
 
-if [[ $DOSUDO =~ 1 ]]
-	then 
-		DOSUDO="sudo echo '$user ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers"
-fi
-if [[ $DOPASS =~ 1 ]]
-	then 
-		NEWPASS=`pwgen -n 32`
-		echo "Setting password to $NEWPASS"
-		DOPASS="echo '$NEWPASS' | passwd $user --stdin"
-fi
 
 mycmd="sudo useradd $user;
 	sudo mkdir -p ~$user/.ssh; 
@@ -68,7 +60,17 @@ mycmd="sudo useradd $user;
 	sudo echo '$mypubkey' >> /tmp/authkeyfile.new;
 	sudo bash -c 'mv /tmp/authkeyfile.new $authkeyfile';
 	sudo bash -c 'chmod 644 $authkeyfile';
-	sudo bash -c 'chown -R $user:$user ~$user/.ssh';
-	$DOSUDO;$DOPASS
+	sudo bash -c 'chown -R $user:$user ~$user/.ssh'
 	"
 ssh -t $myuserhost "$mycmd"
+if [[ $DOSUDO =~ 1 ]]
+	then 
+		ssh -t $myuserhost "grep $user /etc/sudoers || { echo \"$user ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers; }"
+fi
+if [[ $DOPASS =~ 1 ]]
+	then 
+		NEWPASS=`pwgen -n 32`
+		echo "Setting password to $NEWPASS"
+		DOPASS="echo '$NEWPASS' | passwd $user --stdin"
+		ssh -t $myuserhost "$DOPASS"
+fi
