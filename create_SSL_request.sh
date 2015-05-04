@@ -70,6 +70,6 @@ pushd $DESTDIR
 echo $PASS >> passphrase
 openssl genrsa -aes256 -passout pass:$PASS -out ${DN}.encrypt.key 2048
 openssl rsa -in ${DN}.encrypt.key -passin pass:$PASS -out ${DN}.key
-openssl req -new -key ${DN}.key -out ${DN}.csr -subj "/CN=${DN}/emailAddress=$EMAIL/O=$ORG/C=$COUNTRY/ST=$STATE/L=$LOC"
+openssl req -new -sha256 -key ${DN}.key -out ${DN}.csr -subj "/CN=${DN}/emailAddress=$EMAIL/O=$ORG/C=$COUNTRY/ST=$STATE/L=$LOC"
 popd
 cat ${DESTDIR}/${DN}.csr
