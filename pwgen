@@ -1,11 +1,19 @@
-#!/bin/bash 
+#!/bin/bash
 #via: http://thdonline.wordpress.com/2009/03/14/shell-script-to-generate-random-password/
 #with a slight modification for my preferences
 
-CHAR_ARRAY=( {a..z} {A..Z} {0..9}  \! \@ \# \% \^ \& \* \( \) \[ \] \{ \} \: \; \, \. \< \>) 
+CHAR_ARRAY=( {a..z} {A..Z} {0..9}  \! \@ \# \% \^ \& \* \( \) \[ \] \{ \} \: \; \, \. \< \>)
 
-while getopts "ndhc?" opt; do
+get_words() {
+    a=`cat /usr/share/dict/words | perl -MList::Util=shuffle -wne "chomp(@a=shuffle(<>));print join('-',splice @a,0,$1)"`
+	echo $a
+}
+
+while getopts "wndhc?" opt; do
 	case $opt in
+        w)
+		    words=true
+			;;
 		n)
 			CHAR_ARRAY=( {a..z} {A..Z} {0..9} )
 			;;
@@ -20,6 +28,7 @@ while getopts "ndhc?" opt; do
 			;;
 		?)
 			echo "Usage: $0 [options] [length]
+	-w <length> number of words as a phrase
 	-n 'nice' output, Alphanumberic only
 	-d digits 0-9
 	-h hex 0-9 and a-f
@@ -40,11 +49,16 @@ else
 	MAXSIZE=16
 fi
 
-
-MODNUM=${#CHAR_ARRAY[*]} 
-for ((i=0; i < $MAXSIZE; i++ ))
-do
-	NUM=$(( RANDOM % $MODNUM ))
-	echo -n "${CHAR_ARRAY[$NUM]}"
-done
+if [ $words ]
+then
+    pw=$(get_words $MAXSIZE)
+	echo -n "$pw"
+else
+	MODNUM=${#CHAR_ARRAY[*]}
+	for ((i=0; i < $MAXSIZE; i++ ))
+	do
+		NUM=$(( RANDOM % $MODNUM ))
+		echo -n "${CHAR_ARRAY[$NUM]}"
+	done
+fi
 echo ""
