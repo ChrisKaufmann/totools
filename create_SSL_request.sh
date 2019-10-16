@@ -2,11 +2,11 @@
 
 usage()
 {
-	echo "Usage $0 -e 'user@host.com' -o 'organization name' -c 'Country code' -s 'State code' -l 'Locality' [-p 'key pass' -d '/path/to/desired/folder']"
+	echo "Usage $0 -e 'user@host.com' -o 'organization name' -c 'Country code' -s 'State code' -l 'Locality' [-p 'key pass' -d '/path/to/desired/folder' -u 'organizational unit']"
 	exit
 }
 
-while getopts "e:o:c:s:l:p:d:h?" opt; do
+while getopts "u:e:o:c:s:l:p:d:h?" opt; do
 	case $opt in
 		e)
 			EMAIL="$OPTARG"
@@ -29,6 +29,9 @@ while getopts "e:o:c:s:l:p:d:h?" opt; do
 		d)
 			DESTDIR="$OPTARG"
 			;;
+		u)
+			OU="/OU=$OPTARG"
+			;;
 		h)
 			usage
 			;;
@@ -46,6 +49,7 @@ org=$ORG
 country=$COUNTRY 
 state=$STATE
 destdir=$DESTDIR
+ou=$OU
 dn=$DN"
 if [[ ! $LOC  || ! $EMAIL || ! $ORG || ! $COUNTRY || ! $STATE || ! $DN ]]
 	then
@@ -70,6 +74,6 @@ pushd $DESTDIR
 echo $PASS >> passphrase
 openssl genrsa -aes256 -passout pass:$PASS -out ${DN}.encrypt.key 2048
 openssl rsa -in ${DN}.encrypt.key -passin pass:$PASS -out ${DN}.key
-openssl req -new -key ${DN}.key -out ${DN}.csr -subj "/CN=${DN}/emailAddress=$EMAIL/O=$ORG/C=$COUNTRY/ST=$STATE/L=$LOC"
+openssl req -new -key ${DN}.key -out ${DN}.csr -subj "/CN=${DN}/emailAddress=$EMAIL/O=$ORG/C=$COUNTRY/ST=$STATE/L=$LOC$OU"
 popd
 cat ${DESTDIR}/${DN}.csr
